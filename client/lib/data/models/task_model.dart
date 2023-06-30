@@ -15,9 +15,9 @@ class TaskModel {
     required bool done,
   }) {
     return TaskModel(
-      title: 'test',
-      owner: '',
-      done: false,
+      title: title,
+      owner: owner,
+      done: done,
     );
   }
 }

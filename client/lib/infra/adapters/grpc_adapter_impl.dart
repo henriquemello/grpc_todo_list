@@ -18,9 +18,8 @@ class GrpcAdapterImpl implements GrpcAdapter{
   @override
   Future<Tasks> listAll({required String id}) async {
     final user = User()..id = id;
-
+    await Future.delayed(const Duration(seconds: 1)); //TODO: simulate delay
     final tasks = await _service.listAll(user);
-
     return tasks; 
   }
 }

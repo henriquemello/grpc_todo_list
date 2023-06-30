@@ -1,4 +1,5 @@
 
+import 'package:app/presentation/cubits/todo_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 import '../data/datasources/datasources.dart';
@@ -23,5 +24,8 @@ Future init() async{
 
   //usecases
   getIt.registerFactory(() => GetAllTasksUsecase(repository: getIt.call()));
+
+  //Cubit
+  getIt.registerFactory(() => TodoCubit(getAllTasksUsecase: getIt.call()));
 
 }
