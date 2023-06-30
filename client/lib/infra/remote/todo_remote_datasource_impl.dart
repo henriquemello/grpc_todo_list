@@ -16,10 +16,10 @@ class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
 
     final model = tasksProto.task
         .map(
-          (tasksProto) => TaskModel.fromProto(
-            title: tasksProto.title,
-            owner: tasksProto.owner,
-            done: tasksProto.done,
+          (taskProto) => TaskModel.fromProto(
+            title: taskProto.title,
+            owner: taskProto.owner,
+            done: taskProto.done,
           ),
         )
         .toList();
