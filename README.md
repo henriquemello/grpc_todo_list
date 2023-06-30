@@ -5,10 +5,13 @@ A simple way how to synchronize TODO List between devices using gRPC communicati
 ## How to generate the proto files:
 
     dart pub global activate protoc_plugin
+
+    export PATH="$PATH:$HOME/.pub-cache/bin"
+    
     protoc --dart_out=grpc:protos/generated -Iprotos protos/helloworld.proto 
 ## Running the Server
-
-`cd server` and run `npm install`
+ 
+    dart bin/server.dart 
 
 
 ## Compiling the protofile

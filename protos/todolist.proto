@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package todolist;
+
+service TodoListService {
+
+  rpc listAll(User) returns (Tasks);
+  // rpc addTask(Task) returns (Task);
+  // rpc updateTask(newStatus) returns (Task);
+  // rpc removeTask(Task) returns (Empty);
+  // rpc broadcast(User) returns (stream Tasks);
+}
+
+
+message Task {
+  int32 id = 1;
+  string title = 2;
+  bool done = 3;
+  string owner = 4;
+}
+message User{
+  string id =1;
+}
+
+message newStatus{
+  int32 taskId = 1;
+  string owner = 2;
+  bool done = 3;
+}
+
+message Tasks {
+  repeated Task task = 1;
+}
+
+message Empty {}
