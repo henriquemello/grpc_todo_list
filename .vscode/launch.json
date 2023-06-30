@@ -5,21 +5,36 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "grpc_todo_list",
+            "name": "client",
+            "cwd": "client",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "grpc_todo_list (profile mode)",
+            "name": "client (profile mode)",
+            "cwd": "client",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "grpc_todo_list (release mode)",
+            "name": "client (release mode)",
+            "cwd": "client",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
+        },
+        {
+            "name": "protos",
+            "cwd": "protos",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "server",
+            "cwd": "server",
+            "request": "launch",
+            "type": "dart"
         }
     ]
 }
