@@ -21,10 +21,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreenAccent),
           useMaterial3: true,
         ),
         home: const HomePage(title: 'PokerLab Todo App'),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }
