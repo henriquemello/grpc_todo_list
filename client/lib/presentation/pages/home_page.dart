@@ -36,8 +36,7 @@ class _HomePageState extends State<HomePage> {
           builder: (context, state) {
             if (state is TodoInitial) {
               return const Center(
-                child:
-                   Text("Hello Peter, press the button to get your tasks"),
+                child: Text("Hello Peter, press the button to get your tasks"),
               );
             } else if (state is TodoLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -62,11 +61,14 @@ class _HomePageState extends State<HomePage> {
             }
           },
         ),
-        floatingActionButton: const CustomDialog());
+        floatingActionButton: CustomDialog(
+          callback: _createTask,
+        ));
   }
 
   void _getTasks() =>
       BlocProvider.of<TodoCubit>(context).getTasksFromUser(id: "mello");
 
- 
+  void _createTask(TaskEntity task) =>
+      BlocProvider.of<TodoCubit>(context).createTask(task: task);
 }

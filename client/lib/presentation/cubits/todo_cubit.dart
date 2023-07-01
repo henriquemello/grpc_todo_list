@@ -6,9 +6,11 @@ import '../../domain/usecases/usecases.dart';
 
 class TodoCubit extends Cubit<TodoState> {
   final GetAllTasksUsecase getAllTasksUsecase;
+  final CreateTaskUsecase createTaskUsecase;
 
   TodoCubit({
     required this.getAllTasksUsecase,
+    required this.createTaskUsecase,
   }) : super(TodoInitial());
 
   Future getTasksFromUser({required String id}) async {
@@ -17,6 +19,17 @@ class TodoCubit extends Cubit<TodoState> {
     try {
       final tasks = await getAllTasksUsecase(user: UserEntity(id: id));
 
+      emit(TodoSuccess(tasks: tasks));
+    } catch (e) {
+      emit(TodoFailure(exception: e.toString()));
+    }
+  }
+
+  Future createTask({required TaskEntity task}) async {
+    emit(TodoLoading());
+
+    try {
+      final tasks = await createTaskUsecase(task);
       emit(TodoSuccess(tasks: tasks));
     } catch (e) {
       emit(TodoFailure(exception: e.toString()));

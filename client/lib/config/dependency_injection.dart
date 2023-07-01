@@ -1,4 +1,3 @@
-
 import 'package:app/presentation/cubits/todo_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -11,21 +10,25 @@ import '../infra/remote/remotes.dart';
 
 final getIt = GetIt.instance;
 
-Future init() async{
-
+Future init() async {
   //grpcAdapter
   getIt.registerLazySingleton<GrpcAdapter>(() => GrpcAdapterImpl());
 
   //datasources
-  getIt.registerLazySingleton<TodoRemoteDatasource>(() => TodoRemoteDatasourceImpl(grcpClient: getIt.call()));
+  getIt.registerLazySingleton<TodoRemoteDatasource>(
+      () => TodoRemoteDatasourceImpl(grcpClient: getIt.call()));
 
   //repositories
-  getIt.registerLazySingleton<TodoRepository>(() => TodoRepositoryImpl(todoRemoteDatasource: getIt.call()));
+  getIt.registerLazySingleton<TodoRepository>(
+      () => TodoRepositoryImpl(todoRemoteDatasource: getIt.call()));
 
   //usecases
   getIt.registerFactory(() => GetAllTasksUsecase(repository: getIt.call()));
+  getIt.registerFactory(() => CreateTaskUsecase(repository: getIt.call()));
 
   //Cubit
-  getIt.registerFactory(() => TodoCubit(getAllTasksUsecase: getIt.call()));
-
+  getIt.registerFactory(() => TodoCubit(
+        getAllTasksUsecase: getIt.call(),
+        createTaskUsecase: getIt.call(),
+      ));
 }

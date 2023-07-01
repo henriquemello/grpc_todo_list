@@ -1,7 +1,13 @@
+import 'package:app/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
 
 class CustomDialog extends StatefulWidget {
-  const CustomDialog({super.key});
+  const CustomDialog({
+    super.key,
+    required this.callback,
+  });
+
+  final Function(TaskEntity) callback;
 
   @override
   State<CustomDialog> createState() => _CustomDialogState();
@@ -14,54 +20,65 @@ class _CustomDialogState extends State<CustomDialog> {
 
   Future<void> showInformationDialog(BuildContext context) async {
     return await showDialog(
-        context: context,
-        builder: (context) {
-          bool isChecked = false;
-          return StatefulBuilder(builder: (context, setState) {
-            return AlertDialog(
-              content: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextFormField(
-                        controller: _textEditingController,
-                        validator: (value) {
-                          return value!.isNotEmpty ? null : "Enter any text";
-                        },
-                        decoration: const InputDecoration(
-                            hintText: "Please Enter Text"),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Choice Box"),
-                          Checkbox(
-                              value: isChecked,
-                              onChanged: (checked) {
-                                setState(() {
-                                  isChecked = checked!;
-                                });
-                              })
-                        ],
-                      )
-                    ],
-                  )),
-              title: const Text('Stateful Dialog'),
-              actions: <Widget>[
-                InkWell(
-                  child: const Text('OK   '),
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Do something like updating SharedPreferences or User Settings etc.
-                      Navigator.of(context).pop();
-                    }
-                  },
-                ),
-              ],
-            );
-          });
+      context: context,
+      builder: (context) {
+        bool isChecked = false;
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            content: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextFormField(
+                      controller: _textEditingController,
+                      validator: (value) {
+                        return value!.isNotEmpty
+                            ? null
+                            : "Task name is required";
+                      },
+                      decoration:
+                          const InputDecoration(hintText: "type task title .."),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Completed"),
+                        Checkbox(
+                            value: isChecked,
+                            onChanged: (checked) {
+                              setState(() {
+                                isChecked = checked!;
+                              });
+                            })
+                      ],
+                    )
+                  ],
+                )),
+            title: const Text('New task'),
+            actions: <Widget>[
+              InkWell(
+                child: const Text('Create'),
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+
+                    final newTask = TaskEntity(
+                      title: _textEditingController.text,
+                      done: isChecked,
+                      owner: UserEntity(id: "mello"),
+                    );
+
+                    widget.callback(newTask);
+                    _textEditingController.clear();
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
+          );
         });
+      },
+    );
   }
 
   @override
