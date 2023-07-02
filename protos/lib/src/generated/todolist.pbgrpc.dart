@@ -25,6 +25,10 @@ class TodoListServiceClient extends $grpc.Client {
       '/todolist.TodoListService/listAll',
       ($0.User value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Tasks.fromBuffer(value));
+  static final _$addTask = $grpc.ClientMethod<$0.Task, $0.Task>(
+      '/todolist.TodoListService/addTask',
+      ($0.Task value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Task.fromBuffer(value));
 
   TodoListServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -34,6 +38,10 @@ class TodoListServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.Tasks> listAll($0.User request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listAll, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Task> addTask($0.Task request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$addTask, request, options: options);
   }
 }
 
@@ -49,11 +57,23 @@ abstract class TodoListServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.User.fromBuffer(value),
         ($0.Tasks value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Task, $0.Task>(
+        'addTask',
+        addTask_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Task.fromBuffer(value),
+        ($0.Task value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Tasks> listAll_Pre($grpc.ServiceCall call, $async.Future<$0.User> request) async {
     return listAll(call, await request);
   }
 
+  $async.Future<$0.Task> addTask_Pre($grpc.ServiceCall call, $async.Future<$0.Task> request) async {
+    return addTask(call, await request);
+  }
+
   $async.Future<$0.Tasks> listAll($grpc.ServiceCall call, $0.User request);
+  $async.Future<$0.Task> addTask($grpc.ServiceCall call, $0.Task request);
 }

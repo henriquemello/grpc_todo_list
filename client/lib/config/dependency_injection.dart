@@ -16,7 +16,7 @@ Future init() async {
 
   //datasources
   getIt.registerLazySingleton<TodoRemoteDatasource>(
-      () => TodoRemoteDatasourceImpl(grcpClient: getIt.call()));
+      () => TodoRemoteDatasourceImpl(grpcClient: getIt.call()));
 
   //repositories
   getIt.registerLazySingleton<TodoRepository>(

@@ -127,68 +127,6 @@ class User extends $pb.GeneratedMessage {
   void clearId() => clearField(1);
 }
 
-class newStatus extends $pb.GeneratedMessage {
-  factory newStatus() => create();
-  newStatus._() : super();
-  factory newStatus.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory newStatus.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'newStatus', package: const $pb.PackageName(_omitMessageNames ? '' : 'todolist'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'taskId', $pb.PbFieldType.O3, protoName: 'taskId')
-    ..aOS(2, _omitFieldNames ? '' : 'owner')
-    ..aOB(3, _omitFieldNames ? '' : 'done')
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  newStatus clone() => newStatus()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  newStatus copyWith(void Function(newStatus) updates) => super.copyWith((message) => updates(message as newStatus)) as newStatus;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static newStatus create() => newStatus._();
-  newStatus createEmptyInstance() => create();
-  static $pb.PbList<newStatus> createRepeated() => $pb.PbList<newStatus>();
-  @$core.pragma('dart2js:noInline')
-  static newStatus getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<newStatus>(create);
-  static newStatus? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.int get taskId => $_getIZ(0);
-  @$pb.TagNumber(1)
-  set taskId($core.int v) { $_setSignedInt32(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasTaskId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearTaskId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get owner => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set owner($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasOwner() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearOwner() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.bool get done => $_getBF(2);
-  @$pb.TagNumber(3)
-  set done($core.bool v) { $_setBool(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasDone() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearDone() => clearField(3);
-}
-
 class Tasks extends $pb.GeneratedMessage {
   factory Tasks() => create();
   Tasks._() : super();

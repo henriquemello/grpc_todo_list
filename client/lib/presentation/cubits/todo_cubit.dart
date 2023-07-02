@@ -29,8 +29,9 @@ class TodoCubit extends Cubit<TodoState> {
     emit(TodoLoading());
 
     try {
-      final tasks = await createTaskUsecase(task);
-      emit(TodoSuccess(tasks: tasks));
+      final taskAdded = await createTaskUsecase(task);
+      emit(TodoAdded(task: taskAdded));
+      getTasksFromUser(id: "mello");
     } catch (e) {
       emit(TodoFailure(exception: e.toString()));
     }

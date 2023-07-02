@@ -3,28 +3,28 @@ import 'package:protos/protos.dart';
 class TodoListService extends TodoListServiceBase {
   final Tasks _tasks = Tasks();
 
-  List<Tasks> tasksInMemory =[];
-  
-  TodoListService(){
-       _tasks.task.add(Task()
+  List<Tasks> tasksInMemory = [];
+
+  TodoListService() {
+    _tasks.task.add(Task()
       ..owner = 'mello'
       ..id = 1
       ..done = false
       ..title = "Task #1");
 
-       _tasks.task.add(Task()
+    _tasks.task.add(Task()
       ..owner = 'mello'
       ..id = 2
       ..done = true
       ..title = "Task #2");
 
-       _tasks.task.add(Task()
+    _tasks.task.add(Task()
       ..owner = 'mello'
       ..id = 3
       ..done = false
       ..title = "Task #3");
 
-       _tasks.task.add(Task()
+    _tasks.task.add(Task()
       ..owner = 'mello'
       ..id = 4
       ..done = true
@@ -33,9 +33,15 @@ class TodoListService extends TodoListServiceBase {
 
   @override
   Future<Tasks> listAll(ServiceCall call, User request) async {
-      
     print('uhullll!!');
 
     return _tasks;
+  }
+
+  @override
+  Future<Task> addTask(ServiceCall call, Task request) async {
+    print('added uhullll!!');
+    _tasks.task.add(request);
+    return request;
   }
 }

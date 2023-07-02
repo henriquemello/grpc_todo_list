@@ -22,6 +22,15 @@ class TodoSuccess extends TodoState {
   List<Object?> get props => [tasks];
 }
 
+class TodoAdded extends TodoState {
+  final TaskEntity task;
+
+  TodoAdded({required this.task});
+
+  @override
+  List<Object?> get props => [task];
+}
+
 class TodoFailure extends TodoState {
   final String exception;
 

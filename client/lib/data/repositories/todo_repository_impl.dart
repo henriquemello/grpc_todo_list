@@ -15,18 +15,32 @@ class TodoRepositoryImpl implements TodoRepository {
 
   @override
   Future<List<TaskEntity>> getTasks(UserEntity user) async {
-    
     final resultListModel = await todoRemoteDatasource.getTasks(id: user.id);
-    
+
     try {
-      final listTasks = TaskMapper.toEntity(resultListModel);
+      final listTasks = TaskMapper.toEntityList(resultListModel);
       return listTasks;
     } on Exception catch (e, s) {
-
       throw RepositoryException(
           exception: e,
           stackTrace: s,
           reason: 'Error calling getTasks from TodoRepository');
+    }
+  }
+
+  @override
+  Future<TaskEntity> addTask(TaskEntity task) async {
+    final taskModel = TaskMapper.toModel(task);
+    final resultTaskModel = await todoRemoteDatasource.addTask(task: taskModel);
+
+    try {
+      final task = TaskMapper.toEntity(resultTaskModel);
+      return task;
+    } on Exception catch (e, s) {
+      throw RepositoryException(
+          exception: e,
+          stackTrace: s,
+          reason: 'Error calling addTask from TodoRepository');
     }
   }
 }

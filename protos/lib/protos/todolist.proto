@@ -5,8 +5,8 @@ package todolist;
 service TodoListService {
 
   rpc listAll(User) returns (Tasks);
-  // rpc addTask(Task) returns (Task);
-  // rpc updateTask(newStatus) returns (Task);
+  rpc addTask(Task) returns (Task);
+  // rpc updateTask(Task) returns (Task);
   // rpc removeTask(Task) returns (Empty);
   // rpc broadcast(User) returns (stream Tasks);
 }
@@ -20,12 +20,6 @@ message Task {
 }
 message User{
   string id =1;
-}
-
-message newStatus{
-  int32 taskId = 1;
-  string owner = 2;
-  bool done = 3;
 }
 
 message Tasks {

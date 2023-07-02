@@ -7,5 +7,8 @@ class CreateTaskUsecase {
 
   CreateTaskUsecase({required this.repository});
 
-  Future call(TaskEntity task) async {}
+  Future<TaskEntity> call(TaskEntity task) async {
+    final taskAdded = await repository.addTask(task);
+    return taskAdded;
+  }
 }

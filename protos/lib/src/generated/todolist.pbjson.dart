@@ -41,21 +41,6 @@ const User$json = {
 final $typed_data.Uint8List userDescriptor = $convert.base64Decode(
     'CgRVc2VyEg4KAmlkGAEgASgJUgJpZA==');
 
-@$core.Deprecated('Use newStatusDescriptor instead')
-const newStatus$json = {
-  '1': 'newStatus',
-  '2': [
-    {'1': 'taskId', '3': 1, '4': 1, '5': 5, '10': 'taskId'},
-    {'1': 'owner', '3': 2, '4': 1, '5': 9, '10': 'owner'},
-    {'1': 'done', '3': 3, '4': 1, '5': 8, '10': 'done'},
-  ],
-};
-
-/// Descriptor for `newStatus`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List newStatusDescriptor = $convert.base64Decode(
-    'CgluZXdTdGF0dXMSFgoGdGFza0lkGAEgASgFUgZ0YXNrSWQSFAoFb3duZXIYAiABKAlSBW93bm'
-    'VyEhIKBGRvbmUYAyABKAhSBGRvbmU=');
-
 @$core.Deprecated('Use tasksDescriptor instead')
 const Tasks$json = {
   '1': 'Tasks',

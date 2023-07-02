@@ -2,28 +2,58 @@ import 'package:app/data/datasources/datasources.dart';
 import 'package:app/data/models/task_model.dart';
 import 'package:app/infra/adapters/grpc/grpc_adapter.dart';
 
+import '../../domain/exceptions/exceptions.dart';
+
 class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
-  final GrpcAdapter grcpClient;
+  final GrpcAdapter grpcClient;
 
   TodoRemoteDatasourceImpl({
-    required this.grcpClient,
+    required this.grpcClient,
   });
 
   @override
   Future<List<TaskModel>> getTasks({required String id}) async {
-    
-    final tasksProto = await grcpClient.listAll(id: id);
+    try {
+      final tasksProto = await grpcClient.listAll(id: id);
 
-    final model = tasksProto.task
-        .map(
-          (taskProto) => TaskModel.fromProto(
-            title: taskProto.title,
-            owner: taskProto.owner,
-            done: taskProto.done,
-          ),
-        )
-        .toList();
+      final model = tasksProto.task
+          .map(
+            (taskProto) => TaskModel.fromProto(
+              title: taskProto.title,
+              owner: taskProto.owner,
+              done: taskProto.done,
+            ),
+          )
+          .toList();
 
-    return model;
+      return model;
+    } on Exception catch (e, s) {
+      throw DatasourceException(
+        exception: e,
+        stackTrace: s,
+        reason: "Error calling getTasks from TodoRemoteDatasource",
+      );
+    }
+  }
+
+  @override
+  Future<TaskModel> addTask({required TaskModel task}) async {
+    try {
+      final taskProto = await grpcClient.addTask(task: task);
+
+      final model = TaskModel.fromProto(
+        title: taskProto.title,
+        owner: taskProto.owner,
+        done: taskProto.done,
+      );
+
+      return model;
+    } on Exception catch (e, s) {
+      throw DatasourceException(
+        exception: e,
+        stackTrace: s,
+        reason: "Error calling addTask from TodoRemoteDatasource",
+      );
+    }
   }
 }
