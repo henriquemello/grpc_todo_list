@@ -29,6 +29,10 @@ class TodoListServiceClient extends $grpc.Client {
       '/todolist.TodoListService/addTask',
       ($0.Task value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Task.fromBuffer(value));
+  static final _$broadcast = $grpc.ClientMethod<$0.User, $0.Tasks>(
+      '/todolist.TodoListService/broadcast',
+      ($0.User value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Tasks.fromBuffer(value));
 
   TodoListServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -42,6 +46,10 @@ class TodoListServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.Task> addTask($0.Task request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addTask, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.Tasks> broadcast($0.User request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$broadcast, $async.Stream.fromIterable([request]), options: options);
   }
 }
 
@@ -64,6 +72,13 @@ abstract class TodoListServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.Task.fromBuffer(value),
         ($0.Task value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.User, $0.Tasks>(
+        'broadcast',
+        broadcast_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $0.User.fromBuffer(value),
+        ($0.Tasks value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Tasks> listAll_Pre($grpc.ServiceCall call, $async.Future<$0.User> request) async {
@@ -74,6 +89,11 @@ abstract class TodoListServiceBase extends $grpc.Service {
     return addTask(call, await request);
   }
 
+  $async.Stream<$0.Tasks> broadcast_Pre($grpc.ServiceCall call, $async.Future<$0.User> request) async* {
+    yield* broadcast(call, await request);
+  }
+
   $async.Future<$0.Tasks> listAll($grpc.ServiceCall call, $0.User request);
   $async.Future<$0.Task> addTask($grpc.ServiceCall call, $0.Task request);
+  $async.Stream<$0.Tasks> broadcast($grpc.ServiceCall call, $0.User request);
 }

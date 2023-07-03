@@ -7,10 +7,12 @@ import '../../domain/usecases/usecases.dart';
 class TodoCubit extends Cubit<TodoState> {
   final GetAllTasksUsecase getAllTasksUsecase;
   final CreateTaskUsecase createTaskUsecase;
+  final BroadcastTasksUsecase broadcastTasksUsecase;
 
   TodoCubit({
     required this.getAllTasksUsecase,
     required this.createTaskUsecase,
+    required this.broadcastTasksUsecase,
   }) : super(TodoInitial());
 
   Future getTasksFromUser({required String id}) async {
@@ -36,4 +38,6 @@ class TodoCubit extends Cubit<TodoState> {
       emit(TodoFailure(exception: e.toString()));
     }
   }
+
+  Stream<List<TaskEntity>> broadcastTasks({required String id}) => broadcastTasksUsecase.taskStream;
 }

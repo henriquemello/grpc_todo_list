@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/data/models/task_model.dart';
 import 'package:app/infra/adapters/grpc/grpc_adapter.dart';
 import 'package:protos/protos.dart';
@@ -43,7 +45,6 @@ class GrpcAdapterImpl implements GrpcAdapter {
 
       //await Future.delayed(const Duration(seconds: 1)); //TODO: simulate delay
       final taskAdded = await _service.addTask(taskProto);
-
       return taskAdded;
     } on Exception catch (e, s) {
       throw AdapterException(
@@ -53,4 +54,7 @@ class GrpcAdapterImpl implements GrpcAdapter {
       );
     }
   }
+ 
+  @override
+  Stream<Tasks> get taskStream => _service.broadcast(User()..id = "");
 }

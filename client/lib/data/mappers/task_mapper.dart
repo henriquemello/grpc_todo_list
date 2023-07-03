@@ -23,4 +23,17 @@ class TaskMapper {
         title: entity.title,
         done: entity.done,
       );
+
+  static Stream<List<TaskEntity>> toEntityListStream(
+      Stream<List<TaskModel>> model) {
+    return model.asyncMap((event) => event
+        .map(
+          (model) => TaskEntity(
+            owner: UserEntity(id: model.owner),
+            title: model.title,
+            done: model.done,
+          ),
+        )
+        .toList());
+  }
 }

@@ -56,4 +56,19 @@ class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
       );
     }
   }
+  @override
+  Stream<List<TaskModel>> get taskStream {
+
+    return  grpcClient.taskStream.map<List<TaskModel>>(
+        (asyncTaskProto) => asyncTaskProto.task
+            .map<TaskModel>(
+              (taskProto) => TaskModel.fromProto(
+                title: taskProto.title,
+                owner: taskProto.owner,
+                done: taskProto.done,
+              ),
+            )
+            .toList(),
+      );
+  }
 }

@@ -43,4 +43,7 @@ class TodoRepositoryImpl implements TodoRepository {
           reason: 'Error calling addTask from TodoRepository');
     }
   }
+
+  @override 
+  Stream<List<TaskEntity>> get taskStrem => TaskMapper.toEntityListStream(todoRemoteDatasource.taskStream);
 }

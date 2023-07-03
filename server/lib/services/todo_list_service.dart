@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:protos/protos.dart';
 
 class TodoListService extends TodoListServiceBase {
   final Tasks _tasks = Tasks();
-
-  List<Tasks> tasksInMemory = [];
+  static StreamController<Tasks> taskStreamController =
+      StreamController<Tasks>.broadcast();
 
   TodoListService() {
     _tasks.task.add(Task()
@@ -42,6 +44,11 @@ class TodoListService extends TodoListServiceBase {
   Future<Task> addTask(ServiceCall call, Task request) async {
     print('added uhullll!!');
     _tasks.task.add(request);
+    taskStreamController.add(_tasks);
     return request;
   }
+
+  @override
+  Stream<Tasks> broadcast(ServiceCall call, User request) =>
+      taskStreamController.stream;
 }

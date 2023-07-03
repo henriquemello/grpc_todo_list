@@ -22,6 +22,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     todoCubit = BlocProvider.of<TodoCubit>(context);
+    todoCubit.broadcastTasks(id: "mello").listen((event) {
+      _getTasks();
+    });
   }
 
   @override
@@ -69,8 +72,7 @@ class _HomePageState extends State<HomePage> {
         },
         listener: (context, state) {
           if (state is TodoAdded) {
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Task ${state.task.title} added")));
+            _showSnackSuccess(context, state);
           }
         },
       ),
@@ -78,6 +80,11 @@ class _HomePageState extends State<HomePage> {
         callback: _createTask,
       ),
     );
+  }
+
+  void _showSnackSuccess(BuildContext context, TodoAdded state) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Task ${state.task.title} added")));
   }
 
   void _getTasks() => todoCubit.getTasksFromUser(id: "mello");
