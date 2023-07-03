@@ -4,7 +4,7 @@ import 'package:app/presentation/cubits/todo_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/custom_dialog.dart';
+import '../widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -58,15 +58,25 @@ class _HomePageState extends State<HomePage> {
                 final task = state.tasks[index];
 
                 return ListTile(
-                  title: Text(task.title),
-                  subtitle: Text(task.owner.id),
                   leading: Checkbox(value: task.done, onChanged: (checked) {}),
+                  title: Text(
+                    task.title,
+                    style: task.done
+                        ? const TextStyle(
+                            decoration: TextDecoration.lineThrough)
+                        : null,
+                  ),
+                  subtitle: Text(task.id.substring(0,7)),
+                  trailing: GestureDetector(
+                    onTap: () async => _showConfirmationDialog(context),
+                    child: const Icon(Icons.delete),
+                  ),
                 );
               },
             );
           } else {
             return Center(
-              child: Text("Something went wrong:${state.toString()}"),
+              child: Text("Something went wrong: ${state.toString()}"),
             );
           }
         },
@@ -76,7 +86,7 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
-      floatingActionButton: CustomDialog(
+      floatingActionButton: CustomImputDialog(
         callback: _createTask,
       ),
     );
@@ -84,8 +94,11 @@ class _HomePageState extends State<HomePage> {
 
   void _showSnackSuccess(BuildContext context, TodoAdded state) {
     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Task ${state.task.title} added")));
+        SnackBar(content: Text("Task [${state.task.title}] was created!")));
   }
+
+  Future<void> _showConfirmationDialog(context) =>
+      CustomConfirmationDialog.show(context);
 
   void _getTasks() => todoCubit.getTasksFromUser(id: "mello");
 

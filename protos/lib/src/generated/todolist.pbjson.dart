@@ -17,7 +17,7 @@ import 'dart:typed_data' as $typed_data;
 const Task$json = {
   '1': 'Task',
   '2': [
-    {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'title', '3': 2, '4': 1, '5': 9, '10': 'title'},
     {'1': 'done', '3': 3, '4': 1, '5': 8, '10': 'done'},
     {'1': 'owner', '3': 4, '4': 1, '5': 9, '10': 'owner'},
@@ -26,7 +26,7 @@ const Task$json = {
 
 /// Descriptor for `Task`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List taskDescriptor = $convert.base64Decode(
-    'CgRUYXNrEg4KAmlkGAEgASgFUgJpZBIUCgV0aXRsZRgCIAEoCVIFdGl0bGUSEgoEZG9uZRgDIA'
+    'CgRUYXNrEg4KAmlkGAEgASgJUgJpZBIUCgV0aXRsZRgCIAEoCVIFdGl0bGUSEgoEZG9uZRgDIA'
     'EoCFIEZG9uZRIUCgVvd25lchgEIAEoCVIFb3duZXI=');
 
 @$core.Deprecated('Use userDescriptor instead')

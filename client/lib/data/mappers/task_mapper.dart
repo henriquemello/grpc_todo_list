@@ -5,22 +5,25 @@ class TaskMapper {
   static List<TaskEntity> toEntityList(List<TaskModel> model) => model
       .map(
         (model) => TaskEntity(
-          owner: UserEntity(id: model.owner),
+          id: model.id,
           title: model.title,
+          owner: UserEntity(id: model.owner),
           done: model.done,
         ),
       )
       .toList();
 
   static TaskEntity toEntity(TaskModel model) => TaskEntity(
-        owner: UserEntity(id: model.owner),
+        id: model.id,
         title: model.title,
+        owner: UserEntity(id: model.owner),
         done: model.done,
       );
 
   static TaskModel toModel(TaskEntity entity) => TaskModel(
-        owner: entity.owner.id,
+        id: entity.id,
         title: entity.title,
+        owner: entity.owner.id,
         done: entity.done,
       );
 
@@ -29,8 +32,9 @@ class TaskMapper {
     return model.asyncMap((event) => event
         .map(
           (model) => TaskEntity(
-            owner: UserEntity(id: model.owner),
+            id: model.id,
             title: model.title,
+            owner: UserEntity(id: model.owner),
             done: model.done,
           ),
         )

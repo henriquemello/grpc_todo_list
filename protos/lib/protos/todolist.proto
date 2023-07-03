@@ -13,7 +13,7 @@ service TodoListService {
 
 
 message Task {
-  int32 id = 1;
+  string id = 1;
   string title = 2;
   bool done = 3;
   string owner = 4;

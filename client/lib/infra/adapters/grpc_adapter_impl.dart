@@ -39,9 +39,11 @@ class GrpcAdapterImpl implements GrpcAdapter {
   Future<Task> addTask({required TaskModel task}) async {
     try {
       final taskProto = Task()
+        ..id = task.id
         ..title = task.title
         ..owner = task.owner
         ..done = task.done;
+        
 
       //await Future.delayed(const Duration(seconds: 1)); //TODO: simulate delay
       final taskAdded = await _service.addTask(taskProto);

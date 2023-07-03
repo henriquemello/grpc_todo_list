@@ -19,6 +19,7 @@ class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
       final model = tasksProto.task
           .map(
             (taskProto) => TaskModel.fromProto(
+              id: taskProto.id,
               title: taskProto.title,
               owner: taskProto.owner,
               done: taskProto.done,
@@ -42,6 +43,7 @@ class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
       final taskProto = await grpcClient.addTask(task: task);
 
       final model = TaskModel.fromProto(
+        id: taskProto.id,
         title: taskProto.title,
         owner: taskProto.owner,
         done: taskProto.done,
@@ -63,6 +65,7 @@ class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
         (asyncTaskProto) => asyncTaskProto.task
             .map<TaskModel>(
               (taskProto) => TaskModel.fromProto(
+                id: taskProto.id,
                 title: taskProto.title,
                 owner: taskProto.owner,
                 done: taskProto.done,

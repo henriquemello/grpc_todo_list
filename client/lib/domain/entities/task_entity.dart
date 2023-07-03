@@ -1,13 +1,15 @@
 import 'package:app/domain/entities/entities.dart';
 
 class TaskEntity {
-  final UserEntity owner;
+  final String id;
   final String title;
+  final UserEntity owner;
   final bool done;
 
   TaskEntity({
-    required this.owner,
+    required this.id,
     required this.title,
+    required this.owner,
     required this.done,
   });
 }

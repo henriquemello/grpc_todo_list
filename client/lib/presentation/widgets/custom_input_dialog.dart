@@ -1,8 +1,9 @@
 import 'package:app/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
-class CustomDialog extends StatefulWidget {
-  const CustomDialog({
+class CustomImputDialog extends StatefulWidget {
+  const CustomImputDialog({
     super.key,
     required this.callback,
   });
@@ -10,15 +11,15 @@ class CustomDialog extends StatefulWidget {
   final Function(TaskEntity) callback;
 
   @override
-  State<CustomDialog> createState() => _CustomDialogState();
+  State<CustomImputDialog> createState() => _CustomImputDialogState();
 }
 
-class _CustomDialogState extends State<CustomDialog> {
+class _CustomImputDialogState extends State<CustomImputDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _textEditingController = TextEditingController();
 
-  Future<void> showInformationDialog(BuildContext context) async {
+  Future<void> show(BuildContext context) async {
     return await showDialog(
       context: context,
       builder: (context) {
@@ -43,7 +44,7 @@ class _CustomDialogState extends State<CustomDialog> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Completed"),
+                        const Text("Completed?"),
                         Checkbox(
                             value: isChecked,
                             onChanged: (checked) {
@@ -63,6 +64,7 @@ class _CustomDialogState extends State<CustomDialog> {
                   if (_formKey.currentState!.validate()) {
 
                     final newTask = TaskEntity(
+                      id: const Uuid().v4(),
                       title: _textEditingController.text,
                       done: isChecked,
                       owner: UserEntity(id: "mello"),
@@ -85,7 +87,7 @@ class _CustomDialogState extends State<CustomDialog> {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () async {
-        await showInformationDialog(context);
+        await show(context);
       },
       tooltip: 'Add new Task',
       child: const Icon(Icons.add),
