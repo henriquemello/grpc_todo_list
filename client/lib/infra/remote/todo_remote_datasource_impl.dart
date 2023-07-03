@@ -74,4 +74,18 @@ class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
             .toList(),
       );
   }
+  
+  @override
+  Future updateStatus({required TaskModel task}) async{
+    try {
+      await grpcClient.updateStatus(task: task);
+
+    } on Exception catch (e, s) {
+      throw DatasourceException(
+        exception: e,
+        stackTrace: s,
+        reason: "Error calling updateStatus from TodoRemoteDatasource",
+      );
+    }
+  }
 }

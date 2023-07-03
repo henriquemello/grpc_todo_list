@@ -6,7 +6,7 @@ service TodoListService {
 
   rpc listAll(User) returns (Tasks);
   rpc addTask(Task) returns (Task);
-  // rpc updateTask(Task) returns (Task);
+  rpc updateTask(Task) returns (Empty);
   // rpc removeTask(Task) returns (Empty);
   rpc broadcast(User) returns (stream Tasks);
 }

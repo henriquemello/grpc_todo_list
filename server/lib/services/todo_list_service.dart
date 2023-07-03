@@ -52,4 +52,18 @@ class TodoListService extends TodoListServiceBase {
   @override
   Stream<Tasks> broadcast(ServiceCall call, User request) =>
       taskStreamController.stream;
+
+  @override
+  Future<Empty> updateTask(ServiceCall call, Task request) async {
+    print('updated uhullll!!');
+
+    for (final task in _tasks.task) {
+      if (task.id == request.id) {
+        task.done = request.done;
+      }
+    }
+
+    taskStreamController.add(_tasks);
+    return Empty();
+  }
 }

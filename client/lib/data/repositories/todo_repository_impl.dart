@@ -44,6 +44,20 @@ class TodoRepositoryImpl implements TodoRepository {
     }
   }
 
-  @override 
-  Stream<List<TaskEntity>> get taskStrem => TaskMapper.toEntityListStream(todoRemoteDatasource.taskStream);
+  @override
+  Stream<List<TaskEntity>> get taskStrem =>
+      TaskMapper.toEntityListStream(todoRemoteDatasource.taskStream);
+
+  @override
+  Future updateStatus(TaskEntity task) async {
+    try {
+      final taskModel = TaskMapper.toModel(task);
+      await todoRemoteDatasource.updateStatus(task: taskModel);
+    } on Exception catch (e, s) {
+      throw RepositoryException(
+          exception: e,
+          stackTrace: s,
+          reason: 'Error calling updateStatus from TodoRepository');
+    }
+  }
 }

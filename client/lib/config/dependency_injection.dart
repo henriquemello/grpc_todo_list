@@ -26,11 +26,13 @@ Future init() async {
   getIt.registerFactory(() => GetAllTasksUsecase(repository: getIt.call()));
   getIt.registerFactory(() => CreateTaskUsecase(repository: getIt.call()));
   getIt.registerFactory(() => BroadcastTasksUsecase(repository: getIt.call()));
+  getIt.registerFactory(() => UpdateStatusUsecase(repository: getIt.call()));
 
   //Cubit
   getIt.registerFactory(() => TodoCubit(
         getAllTasksUsecase: getIt.call(),
         createTaskUsecase: getIt.call(),
         broadcastTasksUsecase: getIt.call(),
+        updateStatusUsecase: getIt.call(),
       ));
 }

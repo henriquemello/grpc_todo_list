@@ -12,4 +12,18 @@ class TaskEntity {
     required this.owner,
     required this.done,
   });
+
+  TaskEntity copyWith({
+    String? id,
+    String? title,
+    UserEntity? owner,
+    bool? done,
+  }) {
+    return TaskEntity(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      owner: owner ?? this.owner,
+      done: done ?? this.done,
+    );
+  }
 }

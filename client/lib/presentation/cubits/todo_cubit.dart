@@ -8,11 +8,13 @@ class TodoCubit extends Cubit<TodoState> {
   final GetAllTasksUsecase getAllTasksUsecase;
   final CreateTaskUsecase createTaskUsecase;
   final BroadcastTasksUsecase broadcastTasksUsecase;
+  final UpdateStatusUsecase updateStatusUsecase;
 
   TodoCubit({
     required this.getAllTasksUsecase,
     required this.createTaskUsecase,
     required this.broadcastTasksUsecase,
+    required this.updateStatusUsecase,
   }) : super(TodoInitial());
 
   Future getTasksFromUser({required String id}) async {
@@ -33,11 +35,24 @@ class TodoCubit extends Cubit<TodoState> {
     try {
       final taskAdded = await createTaskUsecase(task);
       emit(TodoAdded(task: taskAdded));
-      getTasksFromUser(id: "mello");
     } catch (e) {
       emit(TodoFailure(exception: e.toString()));
     }
   }
 
-  Stream<List<TaskEntity>> broadcastTasks({required String id}) => broadcastTasksUsecase.taskStream;
+  Future changeStatus({required TaskEntity task}) async {
+    emit(TodoLoading());
+
+    try {
+      final newStatus = task.copyWith(done: !task.done);
+
+      await updateStatusUsecase(task: newStatus);
+      emit(TodoStatusChanged());
+    } catch (e) {
+      emit(TodoFailure(exception: e.toString()));
+    }
+  }
+
+  Stream<List<TaskEntity>> broadcastTasks({required String id}) =>
+      broadcastTasksUsecase.taskStream;
 }

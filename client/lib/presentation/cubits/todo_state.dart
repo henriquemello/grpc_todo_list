@@ -31,6 +31,13 @@ class TodoAdded extends TodoState {
   List<Object?> get props => [task];
 }
 
+class TodoStatusChanged extends TodoState {
+  TodoStatusChanged();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class TodoFailure extends TodoState {
   final String exception;
 

@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
             return const Center(
               child: Text("Hello Peter, press the button to get your tasks"),
             );
-          } else if (state is TodoLoading) {
+          } else if (state is TodoLoading || state is TodoAdded || state is TodoStatusChanged) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is TodoSuccess) {
             return ListView.builder(
@@ -58,7 +58,10 @@ class _HomePageState extends State<HomePage> {
                 final task = state.tasks[index];
 
                 return ListTile(
-                  leading: Checkbox(value: task.done, onChanged: (checked) {}),
+                  leading: Checkbox(
+                    value: task.done,
+                    onChanged: (checked) => _changeStatus(task),
+                  ),
                   title: Text(
                     task.title,
                     style: task.done
@@ -66,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                             decoration: TextDecoration.lineThrough)
                         : null,
                   ),
-                  subtitle: Text(task.id.substring(0,7)),
+                  subtitle: Text(task.id.substring(0, 7)),
                   trailing: GestureDetector(
                     onTap: () async => _showConfirmationDialog(context),
                     child: const Icon(Icons.delete),
@@ -82,8 +85,8 @@ class _HomePageState extends State<HomePage> {
         },
         listener: (context, state) {
           if (state is TodoAdded) {
-            _showSnackSuccess(context, state);
-          }
+            _showSnackSuccess(context, state.task);
+          } 
         },
       ),
       floatingActionButton: CustomImputDialog(
@@ -92,9 +95,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _showSnackSuccess(BuildContext context, TodoAdded state) {
+  void _showSnackSuccess(BuildContext context, TaskEntity task) {
     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Task [${state.task.title}] was created!")));
+        SnackBar(content: Text("Task [${task.title}] was created!")));
   }
 
   Future<void> _showConfirmationDialog(context) =>
@@ -103,4 +106,6 @@ class _HomePageState extends State<HomePage> {
   void _getTasks() => todoCubit.getTasksFromUser(id: "mello");
 
   void _createTask(TaskEntity task) => todoCubit.createTask(task: task);
+
+  void _changeStatus(TaskEntity task) => todoCubit.changeStatus(task: task);
 }
