@@ -5,4 +5,5 @@ abstract class TodoRepository {
   Future<TaskEntity> addTask(TaskEntity task);
   Stream<List<TaskEntity>> get taskStrem;
   Future updateStatus(TaskEntity task);
+  Future deleteTask(TaskEntity task);
 }

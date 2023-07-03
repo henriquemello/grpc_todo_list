@@ -5,4 +5,5 @@ abstract class TodoRemoteDatasource{
   Future<TaskModel> addTask({required TaskModel task});
   Stream<List<TaskModel>> get taskStream;
   Future updateStatus({required TaskModel task});
+  Future deleteTask({required TaskModel task});
 }

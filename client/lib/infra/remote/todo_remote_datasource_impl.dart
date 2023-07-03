@@ -88,4 +88,18 @@ class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
       );
     }
   }
+  
+  @override
+  Future deleteTask({required TaskModel task}) async {
+    try {
+      await grpcClient.removeTask(task: task);
+
+    } on Exception catch (e, s) {
+      throw DatasourceException(
+        exception: e,
+        stackTrace: s,
+        reason: "Error calling deleteTask from TodoRemoteDatasource",
+      );
+    }
+  }
 }

@@ -7,4 +7,5 @@ abstract class GrpcAdapter{
   Future<Task> addTask({required TaskModel task});
   Stream<Tasks>  get taskStream;
   Future updateStatus({required TaskModel task});
+  Future removeTask({required TaskModel task});
 }

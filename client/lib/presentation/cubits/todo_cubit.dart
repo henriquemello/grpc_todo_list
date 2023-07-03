@@ -9,12 +9,14 @@ class TodoCubit extends Cubit<TodoState> {
   final CreateTaskUsecase createTaskUsecase;
   final BroadcastTasksUsecase broadcastTasksUsecase;
   final UpdateStatusUsecase updateStatusUsecase;
+  final DeleteTaskUsecase deleteTaskUsecase;
 
   TodoCubit({
     required this.getAllTasksUsecase,
     required this.createTaskUsecase,
     required this.broadcastTasksUsecase,
     required this.updateStatusUsecase,
+    required this.deleteTaskUsecase,
   }) : super(TodoInitial());
 
   Future getTasksFromUser({required String id}) async {
@@ -48,6 +50,17 @@ class TodoCubit extends Cubit<TodoState> {
 
       await updateStatusUsecase(task: newStatus);
       emit(TodoStatusChanged());
+    } catch (e) {
+      emit(TodoFailure(exception: e.toString()));
+    }
+  }
+
+  Future deleteTask({required TaskEntity task}) async {
+    emit(TodoLoading());
+
+    try {
+      await deleteTaskUsecase(task: task);
+      emit(TodoDeleted());
     } catch (e) {
       emit(TodoFailure(exception: e.toString()));
     }

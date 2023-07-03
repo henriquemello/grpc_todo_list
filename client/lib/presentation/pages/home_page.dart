@@ -49,7 +49,10 @@ class _HomePageState extends State<HomePage> {
             return const Center(
               child: Text("Hello Peter, press the button to get your tasks"),
             );
-          } else if (state is TodoLoading || state is TodoAdded || state is TodoStatusChanged) {
+          } else if (state is TodoLoading ||
+              state is TodoAdded ||
+              state is TodoStatusChanged ||
+              state is TodoDeleted) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is TodoSuccess) {
             return ListView.builder(
@@ -71,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   subtitle: Text(task.id.substring(0, 7)),
                   trailing: GestureDetector(
-                    onTap: () async => _showConfirmationDialog(context),
+                    onTap: () async => _showConfirmationDialog(context, task),
                     child: const Icon(Icons.delete),
                   ),
                 );
@@ -86,7 +89,7 @@ class _HomePageState extends State<HomePage> {
         listener: (context, state) {
           if (state is TodoAdded) {
             _showSnackSuccess(context, state.task);
-          } 
+          }
         },
       ),
       floatingActionButton: CustomImputDialog(
@@ -97,15 +100,24 @@ class _HomePageState extends State<HomePage> {
 
   void _showSnackSuccess(BuildContext context, TaskEntity task) {
     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Task [${task.title}] was created!")));
+      SnackBar(
+        content: Text("Task '${task.title}' was created!"),
+      ),
+    );
   }
 
-  Future<void> _showConfirmationDialog(context) =>
-      CustomConfirmationDialog.show(context);
+  Future<void> _showConfirmationDialog(context, task) {
+    return CustomConfirmationDialog(
+      task: task,
+      callback: (task) => _deleteTask(task),
+    ).show(context);
+  }
 
   void _getTasks() => todoCubit.getTasksFromUser(id: "mello");
 
   void _createTask(TaskEntity task) => todoCubit.createTask(task: task);
 
   void _changeStatus(TaskEntity task) => todoCubit.changeStatus(task: task);
+
+  void _deleteTask(TaskEntity task) => todoCubit.deleteTask(task: task);
 }

@@ -66,4 +66,14 @@ class TodoListService extends TodoListServiceBase {
     taskStreamController.add(_tasks);
     return Empty();
   }
+
+  @override
+  Future<Empty> removeTask(ServiceCall call, Task request) async {
+    print('deleted uhullll!!');
+
+    _tasks.task.removeWhere((element) => element.id == request.id);
+
+    taskStreamController.add(_tasks);
+    return Empty();
+  }
 }

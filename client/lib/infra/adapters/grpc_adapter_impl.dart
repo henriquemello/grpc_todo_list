@@ -23,7 +23,8 @@ class GrpcAdapterImpl implements GrpcAdapter {
   Future<Tasks> listAll({required String id}) async {
     try {
       final user = User()..id = id;
-      await Future.delayed(const Duration(milliseconds: 500)); //TODO: simulate delay
+      await Future.delayed(
+          const Duration(milliseconds: 500)); //simulate delay
       final tasks = await _service.listAll(user);
       return tasks;
     } on Exception catch (e, s) {
@@ -74,6 +75,25 @@ class GrpcAdapterImpl implements GrpcAdapter {
         exception: e,
         stackTrace: s,
         reason: "Error calling updateStatus from GrpcAdapter",
+      );
+    }
+  }
+
+  @override
+  Future removeTask({required TaskModel task}) async {
+    try {
+      final taskProto = Task()
+        ..id = task.id
+        ..title = task.title
+        ..owner = task.owner
+        ..done = task.done;
+
+      await _service.removeTask(taskProto);
+    } on Exception catch (e, s) {
+      throw AdapterException(
+        exception: e,
+        stackTrace: s,
+        reason: "Error calling removeTask from GrpcAdapter",
       );
     }
   }

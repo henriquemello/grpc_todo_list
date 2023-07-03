@@ -1,13 +1,20 @@
+import 'package:app/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
 
 class CustomConfirmationDialog {
-  static Future<void> show(BuildContext context) {
+  final TaskEntity task;
+  final Function(TaskEntity) callback;
+
+  CustomConfirmationDialog({required this.task, required this.callback});
+
+  Future<void> show(BuildContext context) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Delete task'),
-          content: const Text("Are you sure?",
+          content: Text(
+            "Do you want to remove '${task.title}' ?",
           ),
           actions: <Widget>[
             TextButton(
@@ -25,6 +32,7 @@ class CustomConfirmationDialog {
               ),
               child: const Text('Yes, please!'),
               onPressed: () {
+                callback(task);
                 Navigator.of(context).pop();
               },
             ),
