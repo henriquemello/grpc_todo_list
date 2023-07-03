@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.getIt<TodoCubit>()),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Todo App gRPC',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreenAccent),
           useMaterial3: true,

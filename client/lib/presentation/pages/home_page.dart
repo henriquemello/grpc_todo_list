@@ -4,6 +4,7 @@ import 'package:app/presentation/cubits/todo_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../config/configs.dart';
 import '../widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,9 +23,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     todoCubit = BlocProvider.of<TodoCubit>(context);
-    todoCubit.broadcastTasks(id: "mello").listen((event) {
+    todoCubit.broadcastTasks(id: AppConstants.USER_NAME).listen((event) {
       _getTasks();
     });
+    _getTasks();
   }
 
   @override
@@ -47,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context, state) {
           if (state is TodoInitial) {
             return const Center(
-              child: Text("Hello Peter, press the button to get your tasks"),
+              child: Text("Hello ${AppConstants.USER_NAME}, press the button to manage your tasks"),
             );
           } else if (state is TodoLoading ||
               state is TodoAdded ||
@@ -72,7 +74,10 @@ class _HomePageState extends State<HomePage> {
                             decoration: TextDecoration.lineThrough)
                         : null,
                   ),
-                  subtitle: Text(task.id.substring(0, 7)),
+                  subtitle: Text(
+                    "id: ${task.id.substring(0, 7)}",
+                    style: const TextStyle(fontSize: 11),
+                  ),
                   trailing: GestureDetector(
                     onTap: () async => _showConfirmationDialog(context, task),
                     child: const Icon(Icons.delete),
@@ -113,7 +118,7 @@ class _HomePageState extends State<HomePage> {
     ).show(context);
   }
 
-  void _getTasks() => todoCubit.getTasksFromUser(id: "mello");
+  void _getTasks() => todoCubit.getTasksFromUser(id: AppConstants.USER_NAME);
 
   void _createTask(TaskEntity task) => todoCubit.createTask(task: task);
 

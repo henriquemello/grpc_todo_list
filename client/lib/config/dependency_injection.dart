@@ -30,11 +30,13 @@ Future init() async {
   getIt.registerFactory(() => DeleteTaskUsecase(repository: getIt.call()));
 
   //Cubit
-  getIt.registerFactory(() => TodoCubit(
-        getAllTasksUsecase: getIt.call(),
-        createTaskUsecase: getIt.call(),
-        broadcastTasksUsecase: getIt.call(),
-        updateStatusUsecase: getIt.call(),
-        deleteTaskUsecase: getIt.call(),
-      ));
+  getIt.registerFactory(
+    () => TodoCubit(
+      getAllTasksUsecase: getIt.call(),
+      createTaskUsecase: getIt.call(),
+      broadcastTasksUsecase: getIt.call(),
+      updateStatusUsecase: getIt.call(),
+      deleteTaskUsecase: getIt.call(),
+    ),
+  );
 }

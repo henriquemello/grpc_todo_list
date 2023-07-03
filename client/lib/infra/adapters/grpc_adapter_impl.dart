@@ -4,6 +4,7 @@ import 'package:app/data/models/task_model.dart';
 import 'package:app/infra/adapters/grpc/grpc_adapter.dart';
 import 'package:protos/protos.dart';
 
+import '../../config/configs.dart';
 import '../../domain/exceptions/exceptions.dart';
 
 class GrpcAdapterImpl implements GrpcAdapter {
@@ -12,8 +13,8 @@ class GrpcAdapterImpl implements GrpcAdapter {
 
   GrpcAdapterImpl() {
     _channel = ClientChannel(
-      '10.0.2.2',
-      port: 50051,
+      AppConstants.SERVER_HOST,
+      port: AppConstants.SERVER_PORT,
       options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
     _service = TodoListServiceClient(_channel);
@@ -45,7 +46,6 @@ class GrpcAdapterImpl implements GrpcAdapter {
         ..owner = task.owner
         ..done = task.done;
 
-      //await Future.delayed(const Duration(seconds: 1)); //TODO: simulate delay
       final taskAdded = await _service.addTask(taskProto);
       return taskAdded;
     } on Exception catch (e, s) {
@@ -58,7 +58,7 @@ class GrpcAdapterImpl implements GrpcAdapter {
   }
 
   @override
-  Stream<Tasks> get taskStream => _service.broadcast(User()..id = "");
+  Stream<Tasks> get taskStream => _service.broadcast(User()..id =  AppConstants.USER_NAME);
 
   @override
   Future updateStatus({required TaskModel task}) async {

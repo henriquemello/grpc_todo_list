@@ -2,6 +2,8 @@ import 'package:app/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../config/configs.dart';
+
 class CustomImputDialog extends StatefulWidget {
   const CustomImputDialog({
     super.key,
@@ -20,6 +22,7 @@ class _CustomImputDialogState extends State<CustomImputDialog> {
   final TextEditingController _textEditingController = TextEditingController();
 
   Future<void> show(BuildContext context) async {
+     _textEditingController.clear();
     return await showDialog(
       context: context,
       builder: (context) {
@@ -39,12 +42,12 @@ class _CustomImputDialogState extends State<CustomImputDialog> {
                             : "Task name is required";
                       },
                       decoration:
-                          const InputDecoration(hintText: "type task title .."),
+                          const InputDecoration(hintText: "task name"),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Completed?"),
+                        const Text("Is it completed?"),
                         Checkbox(
                             value: isChecked,
                             onChanged: (checked) {
@@ -58,20 +61,19 @@ class _CustomImputDialogState extends State<CustomImputDialog> {
                 )),
             title: const Text('New task'),
             actions: <Widget>[
-              InkWell(
-                child: const Text('Create'),
-                onTap: () {
+              TextButton(
+                child: const Text('Create it!'),
+                onPressed: () {
                   if (_formKey.currentState!.validate()) {
 
                     final newTask = TaskEntity(
                       id: const Uuid().v4(),
                       title: _textEditingController.text,
                       done: isChecked,
-                      owner: UserEntity(id: "mello"),
+                      owner: UserEntity(id:  AppConstants.USER_NAME),
                     );
 
                     widget.callback(newTask);
-                    _textEditingController.clear();
                     Navigator.of(context).pop();
                   }
                 },

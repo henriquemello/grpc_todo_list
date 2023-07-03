@@ -8,6 +8,7 @@ class TodoListService extends TodoListServiceBase {
       StreamController<Tasks>.broadcast();
 
   TodoListService() {
+    //Initial data for presentation
     _tasks.task.add(Task()
       ..owner = "mello"
       ..id = "1e5f80fc-0679-464c-ab8e-ebb84858add0"
@@ -35,15 +36,11 @@ class TodoListService extends TodoListServiceBase {
 
   @override
   Future<Tasks> listAll(ServiceCall call, User request) async {
-    print('uhullll!!');
-
     return _tasks;
   }
 
   @override
   Future<Task> addTask(ServiceCall call, Task request) async {
-    print('added uhullll!!');
-
     _tasks.task.add(request);
     taskStreamController.add(_tasks);
     return request;
@@ -55,12 +52,8 @@ class TodoListService extends TodoListServiceBase {
 
   @override
   Future<Empty> updateTask(ServiceCall call, Task request) async {
-    print('updated uhullll!!');
-
     for (final task in _tasks.task) {
-      if (task.id == request.id) {
-        task.done = request.done;
-      }
+      if (task.id == request.id) task.done = request.done;
     }
 
     taskStreamController.add(_tasks);
@@ -69,8 +62,6 @@ class TodoListService extends TodoListServiceBase {
 
   @override
   Future<Empty> removeTask(ServiceCall call, Task request) async {
-    print('deleted uhullll!!');
-
     _tasks.task.removeWhere((element) => element.id == request.id);
 
     taskStreamController.add(_tasks);
