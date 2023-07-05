@@ -1,5 +1,5 @@
 # **TODO App using gRPC**
-## Frontend and Backend built with flutter 💙
+## A simple way how to synchronize TODO Lists between devices using gRPC communication. Frontend and Backend built with flutter & dart 💙
 * flutter v3.10 and dart 3
 ---
 
