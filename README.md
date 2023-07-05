@@ -10,6 +10,17 @@ _*** To run the project, either use the launch configuration in VSCode Studio or
 
 ### First, it's necessary to run the server before running the App 👇
 
+
+before that, get your dependencies:
+
+```sh
+ $  flutter pub get --directory protos
+ $  flutter pub get --directory server
+ $  flutter pub get --directory client
+```
+
+Now, we're ok! let's run the server first: 
+
 ![server-running]
  
 ```sh
