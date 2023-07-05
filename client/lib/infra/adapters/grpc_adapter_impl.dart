@@ -24,15 +24,14 @@ class GrpcAdapterImpl implements GrpcAdapter {
   Future<Tasks> listAll({required String id}) async {
     try {
       final user = User()..id = id;
-      await Future.delayed(
-          const Duration(milliseconds: 500)); //simulate delay
+      await Future.delayed(const Duration(milliseconds: 500)); //simulate delay
       final tasks = await _service.listAll(user);
       return tasks;
-    } on Exception catch (e, s) {
+    } on GrpcError catch (e, s) {
       throw AdapterException(
-        exception: e,
+        exception: Exception(e),
         stackTrace: s,
-        reason: "Error calling listAll from GrpcAdapter",
+        reason: "Error calling listAll from GrpcAdapter - ${e.codeName}",
       );
     }
   }
@@ -48,17 +47,18 @@ class GrpcAdapterImpl implements GrpcAdapter {
 
       final taskAdded = await _service.addTask(taskProto);
       return taskAdded;
-    } on Exception catch (e, s) {
+    } on GrpcError catch (e, s) {
       throw AdapterException(
-        exception: e,
+        exception: Exception(e),
         stackTrace: s,
-        reason: "Error calling addTask from GrpcAdapter",
+        reason: "Error calling addTask from GrpcAdapter - ${e.codeName}",
       );
     }
   }
 
   @override
-  Stream<Tasks> get taskStream => _service.broadcast(User()..id =  AppConstants.USER_NAME);
+  Stream<Tasks> get taskStream =>
+      _service.broadcast(User()..id = AppConstants.USER_NAME);
 
   @override
   Future updateStatus({required TaskModel task}) async {
@@ -70,11 +70,11 @@ class GrpcAdapterImpl implements GrpcAdapter {
         ..done = task.done;
 
       await _service.updateTask(taskProto);
-    } on Exception catch (e, s) {
+    } on GrpcError catch (e, s) {
       throw AdapterException(
-        exception: e,
+        exception: Exception(e),
         stackTrace: s,
-        reason: "Error calling updateStatus from GrpcAdapter",
+        reason: "Error calling updateStatus from GrpcAdapter - ${e.codeName}",
       );
     }
   }
@@ -89,11 +89,11 @@ class GrpcAdapterImpl implements GrpcAdapter {
         ..done = task.done;
 
       await _service.removeTask(taskProto);
-    } on Exception catch (e, s) {
+    } on GrpcError catch (e, s) {
       throw AdapterException(
-        exception: e,
+        exception: Exception(e),
         stackTrace: s,
-        reason: "Error calling removeTask from GrpcAdapter",
+        reason: "Error calling removeTask from GrpcAdapter - ${e.codeName}",
       );
     }
   }

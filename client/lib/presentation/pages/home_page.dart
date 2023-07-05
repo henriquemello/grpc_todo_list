@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(l10n.errorMessage(state.toString()),
+                child: Text(l10n.errorMessage(state),
                     textAlign: TextAlign.center),
               ),
             );

@@ -50,27 +50,13 @@ class TodoRepositoryImpl implements TodoRepository {
 
   @override
   Future updateStatus(TaskEntity task) async {
-    try {
-      final taskModel = TaskMapper.toModel(task);
-      await todoRemoteDatasource.updateStatus(task: taskModel);
-    } on Exception catch (e, s) {
-      throw RepositoryException(
-          exception: e,
-          stackTrace: s,
-          reason: 'Error calling updateStatus from TodoRepository');
-    }
+    final taskModel = TaskMapper.toModel(task);
+    await todoRemoteDatasource.updateStatus(task: taskModel);
   }
-  
+
   @override
   Future deleteTask(TaskEntity task) async {
-    try {
-      final taskModel = TaskMapper.toModel(task);
-      await todoRemoteDatasource.deleteTask(task: taskModel);
-    } on Exception catch (e, s) {
-      throw RepositoryException(
-          exception: e,
-          stackTrace: s,
-          reason: 'Error calling deleteTask from TodoRepository');
-    }
+    final taskModel = TaskMapper.toModel(task);
+    await todoRemoteDatasource.deleteTask(task: taskModel);
   }
 }

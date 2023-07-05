@@ -13,9 +13,8 @@ class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
 
   @override
   Future<List<TaskModel>> getTasks({required String id}) async {
+    final tasksProto = await grpcClient.listAll(id: id);
     try {
-      final tasksProto = await grpcClient.listAll(id: id);
-
       final model = tasksProto.task
           .map(
             (taskProto) => TaskModel.fromProto(
@@ -39,9 +38,8 @@ class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
 
   @override
   Future<TaskModel> addTask({required TaskModel task}) async {
+    final taskProto = await grpcClient.addTask(task: task);
     try {
-      final taskProto = await grpcClient.addTask(task: task);
-
       final model = TaskModel.fromProto(
         id: taskProto.id,
         title: taskProto.title,
@@ -58,48 +56,30 @@ class TodoRemoteDatasourceImpl implements TodoRemoteDatasource {
       );
     }
   }
+
   @override
   Stream<List<TaskModel>> get taskStream {
-
-    return  grpcClient.taskStream.map<List<TaskModel>>(
-        (asyncTaskProto) => asyncTaskProto.task
-            .map<TaskModel>(
-              (taskProto) => TaskModel.fromProto(
-                id: taskProto.id,
-                title: taskProto.title,
-                owner: taskProto.owner,
-                done: taskProto.done,
-              ),
-            )
-            .toList(),
-      );
+    return grpcClient.taskStream.map<List<TaskModel>>(
+      (asyncTaskProto) => asyncTaskProto.task
+          .map<TaskModel>(
+            (taskProto) => TaskModel.fromProto(
+              id: taskProto.id,
+              title: taskProto.title,
+              owner: taskProto.owner,
+              done: taskProto.done,
+            ),
+          )
+          .toList(),
+    );
   }
-  
+
   @override
-  Future updateStatus({required TaskModel task}) async{
-    try {
-      await grpcClient.updateStatus(task: task);
-
-    } on Exception catch (e, s) {
-      throw DatasourceException(
-        exception: e,
-        stackTrace: s,
-        reason: "Error calling updateStatus from TodoRemoteDatasource",
-      );
-    }
+  Future updateStatus({required TaskModel task}) async {
+    await grpcClient.updateStatus(task: task);
   }
-  
+
   @override
   Future deleteTask({required TaskModel task}) async {
-    try {
-      await grpcClient.removeTask(task: task);
-
-    } on Exception catch (e, s) {
-      throw DatasourceException(
-        exception: e,
-        stackTrace: s,
-        reason: "Error calling deleteTask from TodoRemoteDatasource",
-      );
-    }
+    await grpcClient.removeTask(task: task);
   }
 }

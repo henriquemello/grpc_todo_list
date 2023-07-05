@@ -1,3 +1,4 @@
+import 'package:app/domain/exceptions/exceptions.dart';
 import 'package:app/presentation/cubits/todo_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,8 +27,8 @@ class TodoCubit extends Cubit<TodoState> {
       final tasks = await getAllTasksUsecase(user: UserEntity(id: id));
 
       emit(TodoSuccess(tasks: tasks));
-    } catch (e) {
-      emit(TodoFailure(exception: e.toString()));
+    } on BaseException catch (e) {
+      emit(TodoFailure(exception: e.reason.toString()));
     }
   }
 
@@ -37,8 +38,8 @@ class TodoCubit extends Cubit<TodoState> {
     try {
       final taskAdded = await createTaskUsecase(task);
       emit(TodoAdded(task: taskAdded));
-    } catch (e) {
-      emit(TodoFailure(exception: e.toString()));
+    } on BaseException catch (e) {
+      emit(TodoFailure(exception: e.reason.toString()));
     }
   }
 
@@ -50,8 +51,8 @@ class TodoCubit extends Cubit<TodoState> {
 
       await updateStatusUsecase(task: newStatus);
       emit(TodoStatusChanged());
-    } catch (e) {
-      emit(TodoFailure(exception: e.toString()));
+    } on BaseException catch (e) {
+      emit(TodoFailure(exception: e.reason.toString()));
     }
   }
 
@@ -61,8 +62,8 @@ class TodoCubit extends Cubit<TodoState> {
     try {
       await deleteTaskUsecase(task: task);
       emit(TodoDeleted());
-    } catch (e) {
-      emit(TodoFailure(exception: e.toString()));
+    } on BaseException catch (e) {
+      emit(TodoFailure(exception: e.reason.toString()));
     }
   }
 
