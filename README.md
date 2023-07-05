@@ -1,33 +1,40 @@
 # **TODO App using gRPC**
-## A simple way how to synchronize TODO Lists between devices using gRPC communication. Frontend and Backend built with flutter & dart 💙
-* flutter v3.10 and dart 3
+## A simple way to synchronize TODO Lists between devices using gRPC communication. Frontend and Backend built with flutter & dart 💙
+* Flutter v3.10 and Dart 3
 ---
 
 ## Getting Started 🚀
 
-_*** To run the project either use the launch configuration in VSCode Studio or use the following commands._
+_*** To run the project, either use the launch configuration in VSCode Studio or execute the following commands_
 
 
-### Firstly, It's necessary to run the server before the App 👇
+### First, it's necessary to run the server before running the App 👇
 
 ![server-running]
  
 ```sh
-$  dart server/bin/server.dart 
+ $  dart server/bin/server.dart 
 ```
 ### Then run on your favorite device or emulator 👇
 
 ![client-running]
 
 ```sh
-$  cd client
-$  flutter run -d emulator-5556
+ $  cd client
+ $  flutter run -d emulator-5556
 ```
-If you want to check the sync feature, just open another terminal tab and run on other device
+If you want to check the sync feature, simply open another terminal tab and run it on another device
 
 ```sh
-$  cd client
-$  flutter run -d emulator-XPTO
+ $  cd client
+ $  flutter run -d emulator-XPTO
+```
+
+### If it is necessary to make changes to the `.proto` file, you just need to generate the files as follows:
+
+```sh
+ $  cd protos/lib
+ $  protoc --dart_out=grpc:src/generated -Iprotos protos/*  
 ```
 
 ---
