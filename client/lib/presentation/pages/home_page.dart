@@ -8,9 +8,7 @@ import '../../config/configs.dart';
 import '../widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -31,25 +29,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = TodoAppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(l10n.welcome(AppConstants.USER_NAME)),
         actions: [
-          GestureDetector(
-            onTap: _getTasks,
-            child: const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Icon(Icons.refresh),
-            ),
-          ),
+          LanguageButton(onPressed: _changeLanguage),
         ],
       ),
       body: BlocConsumer<TodoCubit, TodoState>(
         builder: (context, state) {
           if (state is TodoInitial) {
-            return const Center(
-              child: Text("Hello ${AppConstants.USER_NAME}, press the button to manage your tasks"),
+            return Center(
+              child: Text(l10n.initialLoad(AppConstants.USER_NAME)),
             );
           } else if (state is TodoLoading ||
               state is TodoAdded ||
@@ -87,7 +81,11 @@ class _HomePageState extends State<HomePage> {
             );
           } else {
             return Center(
-              child: Text("Something went wrong: ${state.toString()}"),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(l10n.errorMessage(state.toString()),
+                    textAlign: TextAlign.center),
+              ),
             );
           }
         },
@@ -104,14 +102,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _showSnackSuccess(BuildContext context, TaskEntity task) {
+    final l10n = TodoAppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("Task '${task.title}' was created!"),
+        content: Text(l10n.taskTitleWasCreated(task.title)),
       ),
     );
   }
 
-  Future<void> _showConfirmationDialog(context, task) {
+  Future<void> _showConfirmationDialog(context, task) async {
     return CustomConfirmationDialog(
       task: task,
       callback: (task) => _deleteTask(task),
@@ -125,4 +124,14 @@ class _HomePageState extends State<HomePage> {
   void _changeStatus(TaskEntity task) => todoCubit.changeStatus(task: task);
 
   void _deleteTask(TaskEntity task) => todoCubit.deleteTask(task: task);
+
+  void _changeLanguage() {
+    const usLocale = Locale('en', 'US');
+    const frLocale = Locale('fr', 'CA');
+
+    final currentLocale = Localizations.localeOf(context);
+    localizationStream.add(
+      currentLocale.languageCode == usLocale.languageCode ? frLocale : usLocale,
+    );
+  }
 }

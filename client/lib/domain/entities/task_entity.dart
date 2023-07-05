@@ -1,12 +1,13 @@
 import 'package:app/domain/entities/entities.dart';
+import 'package:equatable/equatable.dart';
 
-class TaskEntity {
+class TaskEntity extends Equatable {
   final String id;
   final String title;
   final UserEntity owner;
   final bool done;
 
-  TaskEntity({
+  const TaskEntity({
     required this.id,
     required this.title,
     required this.owner,
@@ -26,4 +27,12 @@ class TaskEntity {
       done: done ?? this.done,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        owner,
+        done,
+      ];
 }

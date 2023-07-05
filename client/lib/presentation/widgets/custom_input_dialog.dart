@@ -22,6 +22,7 @@ class _CustomImputDialogState extends State<CustomImputDialog> {
   final TextEditingController _textEditingController = TextEditingController();
 
   Future<void> show(BuildContext context) async {
+    final l10n = TodoAppLocalizations.of(context)!;
      _textEditingController.clear();
     return await showDialog(
       context: context,
@@ -39,15 +40,15 @@ class _CustomImputDialogState extends State<CustomImputDialog> {
                       validator: (value) {
                         return value!.isNotEmpty
                             ? null
-                            : "Task name is required";
+                            : l10n.taskNameIsRequired;
                       },
                       decoration:
-                          const InputDecoration(hintText: "task name"),
+                          InputDecoration(hintText: l10n.taskName),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Is it completed?"),
+                        Text(l10n.isItCompleted),
                         Checkbox(
                             value: isChecked,
                             onChanged: (checked) {
@@ -59,10 +60,10 @@ class _CustomImputDialogState extends State<CustomImputDialog> {
                     )
                   ],
                 )),
-            title: const Text('New task'),
+            title: Text(l10n.newTask),
             actions: <Widget>[
               TextButton(
-                child: const Text('Create it!'),
+                child: Text(l10n.createIt),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
 
@@ -70,7 +71,7 @@ class _CustomImputDialogState extends State<CustomImputDialog> {
                       id: const Uuid().v4(),
                       title: _textEditingController.text,
                       done: isChecked,
-                      owner: UserEntity(id:  AppConstants.USER_NAME),
+                      owner: const UserEntity(id:  AppConstants.USER_NAME),
                     );
 
                     widget.callback(newTask);
@@ -87,11 +88,12 @@ class _CustomImputDialogState extends State<CustomImputDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = TodoAppLocalizations.of(context)!;
     return FloatingActionButton(
       onPressed: () async {
         await show(context);
       },
-      tooltip: 'Add new Task',
+      tooltip: l10n.addNewTask,
       child: const Icon(Icons.add),
     );
   }

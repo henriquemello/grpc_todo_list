@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:app/presentation/cubits/todo_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -10,7 +13,10 @@ import '../infra/remote/remotes.dart';
 
 final getIt = GetIt.instance;
 
+StreamController<Locale> localizationStream = StreamController<Locale>();
+
 Future init() async {
+
   //grpcAdapter
   getIt.registerLazySingleton<GrpcAdapter>(() => GrpcAdapterImpl());
 
