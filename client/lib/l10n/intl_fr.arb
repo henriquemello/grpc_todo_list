@@ -1,0 +1,42 @@
+{
+    "@@locale":"fr",
+    "welcome":"Accueillir, {userName}!",
+    "@welcome": {
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "initialLoad":"Bonjour {userName}, appuyez sur le bouton pour gérer vos tâches",
+    "@initialLoad": {
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "errorMessage":"Une erreur s'est produite : {errorString}",
+    "@errorMessage":{
+        "placeholders": {
+            "errorString": {}
+        }
+     },
+    "deleteTask":"Supprimer la tâche",
+    "doYoutWant":"Voulez-vous supprimer '{taskTitle}' ?",
+    "@doYoutWant":{
+        "placeholders": {
+            "taskTitle": {}
+        }
+     },
+     "noAnswer":"Non",
+     "yesAnswer":"Oui s'il te plaît!",
+     "taskNameIsRequired":"Le nom de la tâche est requis",
+     "taskName":"Nom de la tâche",
+     "isItCompleted":"Est-il terminé ?",
+     "taskTitleWasCreated":"La tâche {taskTitlex} a été créée !",
+     "@taskTitleWasCreated":{
+        "placeholders": {
+            "taskTitlex": {}
+        }
+     },
+     "newTask":"Nouvelle tâche",
+     "createIt":"Créez-le !",
+     "addNewTask":"Ajouter une nouvelle tâche"     
+}

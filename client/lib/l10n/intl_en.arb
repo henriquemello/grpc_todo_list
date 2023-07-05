@@ -1,0 +1,42 @@
+{
+    "@@locale":"en",
+    "welcome":"Welcome, {userName}!",
+        "@welcome": {
+            "placeholders": {
+                "userName": {}
+            }
+    },
+    "initialLoad":"Hello {userName}, press the button to manage your tasks",
+    "@initialLoad": {
+        "placeholders": {
+            "userName": {}
+        }
+    },
+    "errorMessage":"Something went wrong: {errorString}",
+    "@errorMessage":{
+        "placeholders": {
+            "errorString": {}
+        }
+     },
+    "deleteTask":"Delete task",
+    "doYoutWant":"Do you want to remove '{taskTitle}' ?",
+    "@doYoutWant":{
+        "placeholders": {
+            "taskTitle": {}
+        }
+     },
+     "noAnswer":"No",
+     "yesAnswer":"Yes, please!",
+     "taskNameIsRequired":"Task name is required",
+     "taskName":"task name",
+     "isItCompleted":"Is it completed?",
+     "taskTitleWasCreated":"Task {taskTitlex} was created!",
+     "@taskTitleWasCreated":{
+        "placeholders": {
+            "taskTitlex": {}
+        }
+     },
+     "newTask":"New Task",
+     "createIt":"Create it!",
+     "addNewTask":"Add new Task"     
+}
